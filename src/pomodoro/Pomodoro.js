@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import classNames from "../utils/class-names";
 import useInterval from "../utils/useInterval";
-import { minutesToDuration, secondsToDuration } from "../utils/duration";
 import Duration from "./Duration";
 import TimeDisplay from "./DisplayTimer";
 
@@ -51,6 +50,7 @@ function Pomodoro() {
     () => {
       // ToDo: Implement what should happen when the timer is running
       setTime(time - 1);
+
       if (time === 1) {
         setIsTimerRunning(false);
         new Audio(`https://bigsoundbank.com/UPLOAD/mp3/1482.mp3`).play();
@@ -59,10 +59,8 @@ function Pomodoro() {
           setDuration(breakDuration * 60);
           setPhase("On Break");
         } else {
-          {
-            reset();
-            setPhase("Focusing");
-          }
+          reset();
+          setPhase("Focusing");
         }
       } else if (phase !== "On Break") {
         setPhase("Focusing");

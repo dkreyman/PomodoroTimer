@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import classNames from "../utils/class-names";
 import { minutesToDuration } from "../utils/duration";
 

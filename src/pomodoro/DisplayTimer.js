@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { minutesToDuration, secondsToDuration } from "../utils/duration";
+import React from "react";
+import { secondsToDuration } from "../utils/duration";
 
 function TimeDisplay({ phase, duration, time, isTimerRunning }) {
   let pauseDisplay;
@@ -8,6 +8,8 @@ function TimeDisplay({ phase, duration, time, isTimerRunning }) {
   } else {
     pauseDisplay = "none";
   }
+
+  const countDown = 100 - (time / duration) * 100;
   if (phase === "Focusing" || phase === "On Break") {
     return (
       <div>
@@ -33,9 +35,9 @@ function TimeDisplay({ phase, duration, time, isTimerRunning }) {
                 role="progressbar"
                 aria-valuemin="0"
                 aria-valuemax="100"
-                aria-valuenow={100 - (time / duration) * 100} // TODO: Increase aria-valuenow as elapsed time increases
+                aria-valuenow={countDown} // TODO: Increase aria-valuenow as elapsed time increases
                 style={{
-                  width: 100 - (time / duration) * 100 + "%",
+                  width: countDown + "%",
                 }} // TODO: Increase width % as elapsed time increases
               />
             </div>
