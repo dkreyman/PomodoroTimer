@@ -9,11 +9,11 @@ function Duration({
   minusBreakHandler,
   focusDuration,
   breakDuration,
-  phase,
+  initialphase,
 }) {
   const btnClass = classNames({
-    "btn btn-secondary": phase === "Focus",
-    "btn btn-secondary disabled": phase !== "Focus",
+    "btn btn-secondary": initialphase,
+    "btn btn-secondary disabled": !initialphase,
   });
   return (
     <div className="row">

@@ -8,20 +8,21 @@ function Pomodoro() {
   const [focusDuration, setFocusDuration] = useState(25);
   // Timer starts out paused
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [phase, setPhase] = useState("Focus");
+  const [phase, setPhase] = useState("Focusing");
+  const [initialphase, setInitialphase] = useState(true);
   //duration is a h1 label
   const [time, setTime] = useState(focusDuration * 60);
   const [duration, setDuration] = useState(25 * 60);
 
   const plusFocusHandler = () => {
-    if (focusDuration < 60 && phase === "Focus") {
+    if (focusDuration < 60 && initialphase) {
       setTime(time + 5 * 60);
       setDuration(time + 5 * 60);
       setFocusDuration(focusDuration + 5);
     }
   };
   const minusFocusHandler = () => {
-    if (focusDuration > 5 && phase === "Focus") {
+    if (focusDuration > 5 && initialphase) {
       setTime(time - 5 * 60);
       setDuration(time - 5 * 60);
       setFocusDuration(focusDuration - 5);
@@ -29,21 +30,22 @@ function Pomodoro() {
   };
   const [breakDuration, setBreakDuration] = useState(5);
   const plusBreakHandler = () => {
-    if (breakDuration < 15 && phase === "Focus") {
+    if (breakDuration < 15 && initialphase) {
       setBreakDuration(breakDuration + 1);
     }
   };
   const minusBreakHandler = () => {
-    if (breakDuration > 1 && phase === "Focus") {
+    if (breakDuration > 1 && initialphase) {
       setBreakDuration(breakDuration - 1);
     }
   };
 
   const reset = () => {
     setIsTimerRunning(false);
-    setPhase("Focus");
+    setInitialphase(true);
     setDuration(focusDuration * 60);
     setTime(focusDuration * 60);
+    setPhase("Focusing");
   };
 
   useInterval(
@@ -60,7 +62,7 @@ function Pomodoro() {
           setPhase("On Break");
         } else {
           reset();
-          setPhase("Focusing");
+          setInitialphase(false);
         }
       } else if (phase !== "On Break") {
         setPhase("Focusing");
@@ -72,6 +74,7 @@ function Pomodoro() {
 
   function playPause() {
     setIsTimerRunning((prevState) => !prevState);
+    setInitialphase(false);
   }
 
   return (
@@ -83,7 +86,7 @@ function Pomodoro() {
         minusBreakHandler={minusBreakHandler}
         focusDuration={focusDuration}
         breakDuration={breakDuration}
-        phase={phase}
+        initialphase={initialphase}
       />
       <div className="row">
         <div className="col">
@@ -123,6 +126,7 @@ function Pomodoro() {
         phase={phase}
         duration={duration}
         time={time}
+        initialphase={initialphase}
         isTimerRunning={isTimerRunning}
       />
     </div>

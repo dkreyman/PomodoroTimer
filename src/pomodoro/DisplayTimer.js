@@ -1,7 +1,17 @@
 import React from "react";
 import { secondsToDuration } from "../utils/duration";
 
-function TimeDisplay({ phase, duration, time, isTimerRunning }) {
+// function nextTick(prevState) {
+//   const timeRemaining = Math.max(0, prevState.time - 1);
+//   const elapsedSeconds = prevState.duration - time;
+//   return {
+//     ...prevState,
+//     timeRemaining,
+//     percentComplete: (elapsedSeconds / prevState.duration) * 100,
+//   };
+// }
+
+function TimeDisplay({ phase, duration, time, isTimerRunning, initialphase }) {
   let pauseDisplay;
   if (!isTimerRunning & (time !== duration)) {
     pauseDisplay = "block";
@@ -9,8 +19,8 @@ function TimeDisplay({ phase, duration, time, isTimerRunning }) {
     pauseDisplay = "none";
   }
 
-  const countDown = 100 - (time / duration) * 100;
-  if (phase === "Focusing" || phase === "On Break") {
+  let countDown = 100 - (time / duration) * 100;
+  if (!initialphase) {
     return (
       <div>
         {/* TODO: This area should show only when a focus or break session is running or pauses */}
@@ -40,6 +50,7 @@ function TimeDisplay({ phase, duration, time, isTimerRunning }) {
                   width: countDown + "%",
                 }} // TODO: Increase width % as elapsed time increases
               />
+              {console.log(countDown + "%")}
             </div>
           </div>
         </div>
